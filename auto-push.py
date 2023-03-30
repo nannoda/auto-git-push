@@ -1,4 +1,6 @@
 import asyncio
+import os
+import sys
 LOGGING = True
 
 
@@ -7,6 +9,19 @@ def log(msg)->None:
         print(msg)
 
 async def commit(path:str = "."):
+    log("Pulling...")
+    proc = await asyncio.create_subprocess_exec(
+        "git", "pull",
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE
+    )
+    stdout, stderr = await proc.communicate()
+    log(f"[stdout] {stdout.decode()}")
+    log(f"[stderr] {stderr.decode()}")
+
+    
+
+
     print(f"Adding {path}...")
     proc = await asyncio.create_subprocess_exec(
         "git", "add", path,
