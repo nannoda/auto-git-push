@@ -8,6 +8,8 @@ def log(msg)->None:
     if LOGGING:
         print(msg)
 
+this_path = os.path.dirname(os.path.abspath(__file__))
+
 async def update_repo(path:str = "."):
     """
     Updates the repo by pulling, adding, commiting, and pushing
@@ -92,6 +94,7 @@ async def main():
     while True:
         # update the repo
         try:
+            os.chdir(this_path)
             with open(args.path_file, "r") as f:
                 paths = f.readlines()
             for path in paths:
