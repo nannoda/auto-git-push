@@ -10,7 +10,7 @@ def log(msg)->None:
 
 async def update_repo(path:str = "."):
     """
-    Updates the repo
+    Updates the repo by pulling, adding, commiting, and pushing
     """
     # change directory to the path
     os.chdir(path)
@@ -85,6 +85,7 @@ async def main():
 
     log("Starting...")
     while True:
+        # update the repo
         await update_repo()
         log("Waiting...")
         await asyncio.sleep(args.interval)
