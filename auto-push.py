@@ -58,6 +58,7 @@ async def main():
     log("Starting...")
     while True:
         await commit()
+        log("Waiting...")
         await asyncio.sleep(args.interval)
 
 if __name__ == "__main__":
