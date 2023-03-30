@@ -8,7 +8,28 @@ def log(msg)->None:
     if LOGGING:
         print(msg)
 
-async def commit(path:str = "."):
+async def update_repo(path:str = "."):
+    """
+    Updates the repo
+    """
+    # change directory to the path
+    os.chdir(path)
+    log("Changing directory...")
+    log(f"Current directory: {os.getcwd()}")
+    log("Checking status...")
+    proc = await asyncio.create_subprocess_exec(
+        "git", "status",
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE
+    )
+    stdout, stderr = await proc.communicate()
+    log(f"[stdout] {stdout.decode()}")
+    log(f"[stderr] {stderr.decode()}")
+    if "nothing to commit" in stdout.decode():
+        log("Nothing to commit, exiting...")
+        return
+
+
     log("Pulling...")
     proc = await asyncio.create_subprocess_exec(
         "git", "pull",
@@ -19,7 +40,7 @@ async def commit(path:str = "."):
     log(f"[stdout] {stdout.decode()}")
     log(f"[stderr] {stderr.decode()}")
 
-    
+
 
 
     print(f"Adding {path}...")
@@ -72,7 +93,7 @@ async def main():
 
     log("Starting...")
     while True:
-        await commit()
+        await update_repo()
         log("Waiting...")
         await asyncio.sleep(args.interval)
 
