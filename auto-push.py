@@ -16,20 +16,7 @@ async def update_repo(path:str = "."):
     os.chdir(path)
     log("Changing directory...")
     log(f"Current directory: {os.getcwd()}")
-    log("Checking status...")
-    proc = await asyncio.create_subprocess_exec(
-        "git", "status",
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE
-    )
-    stdout, stderr = await proc.communicate()
-    log(f"[stdout] {stdout.decode()}")
-    log(f"[stderr] {stderr.decode()}")
-    if "nothing to commit" in stdout.decode():
-        log("Nothing to commit, exiting...")
-        return
-
-
+    
     log("Pulling...")
     proc = await asyncio.create_subprocess_exec(
         "git", "pull",
@@ -40,10 +27,10 @@ async def update_repo(path:str = "."):
     log(f"[stdout] {stdout.decode()}")
     log(f"[stderr] {stderr.decode()}")
 
+    
 
 
-
-    print(f"Adding {path}...")
+    log(f"Adding {path}...")
     proc = await asyncio.create_subprocess_exec(
         "git", "add", path,
         stdout=asyncio.subprocess.PIPE,
