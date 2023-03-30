@@ -60,8 +60,10 @@ async def update_repo(path:str = "."):
         stderr=asyncio.subprocess.PIPE
     )
     stdout, stderr = await proc.communicate()
-    log(f"[stdout] {stdout.decode()}")
-    log(f"[stderr] {stderr.decode()}")
+    if stdout:
+        log(f"[stdout] {stdout.decode()}")
+    if stderr:
+        log(f"[stderr] {stderr.decode()}")
     log("Done")
 
 async def main():
@@ -80,7 +82,7 @@ async def main():
     global LOGGING
     LOGGING = args.log
     log(args.interval)
-    
+
     log("Starting...")
     while True:
         await update_repo()
