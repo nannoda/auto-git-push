@@ -1,1 +1,3 @@
-.
+# path/to/your/repos
+/Users/chitose/Documents/GitHub/auto-git-push
+/Users/chitose/Documents/GitHub/video-scripts
