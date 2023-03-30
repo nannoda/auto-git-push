@@ -78,6 +78,10 @@ async def main():
                         help="interval in seconds", 
                         type=int,
                         default=60)
+    parser.add_argument("--path-file", "-p",
+                        help="a file that contains the path to the repo",
+                        type=str,
+                        default=".")
     args = parser.parse_args()
     global LOGGING
     LOGGING = args.log
@@ -86,7 +90,10 @@ async def main():
     log("Starting...")
     while True:
         # update the repo
-        await update_repo()
+        try:
+            await update_repo()
+        except Exception as e:
+            log(e)
         log("Waiting...")
         await asyncio.sleep(args.interval)
 
