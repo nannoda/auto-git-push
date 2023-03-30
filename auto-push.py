@@ -96,6 +96,8 @@ async def main():
                 paths = f.readlines()
             for path in paths:
                 path = path.strip()
+                if path.startswith("#"):
+                    continue
                 log(f"Updating path: \"{path}\"")
                 await update_repo(path)
         except Exception as e:
