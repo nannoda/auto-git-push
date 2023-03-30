@@ -88,7 +88,7 @@ async def main():
     args = parser.parse_args()
     global LOGGING
     LOGGING = args.log
-    log(args.interval)
+    log(f"Interval: {args.interval} seconds")
 
     log("Starting...")
     while True:
