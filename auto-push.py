@@ -24,11 +24,10 @@ async def update_repo(path:str = "."):
         stderr=asyncio.subprocess.PIPE
     )
     stdout, stderr = await proc.communicate()
-    log(f"[stdout] {stdout.decode()}")
-    log(f"[stderr] {stderr.decode()}")
-
-    
-
+    if stdout:
+        log(f"[stdout] {stdout.decode()}")
+    if stderr:
+        log(f"[stderr] {stderr.decode()}")
 
     log(f"Adding {path}...")
     proc = await asyncio.create_subprocess_exec(
@@ -37,8 +36,12 @@ async def update_repo(path:str = "."):
         stderr=asyncio.subprocess.PIPE
     )
     stdout, stderr = await proc.communicate()
-    log(f"[stdout] {stdout.decode()}")
-    log(f"[stderr] {stderr.decode()}")
+    if stdout:
+        log(f"[stdout] {stdout.decode()}")
+    if stderr:
+        log(f"[stderr] {stderr.decode()}")
+
+        
     log("Commiting...")
     proc = await asyncio.create_subprocess_exec(
         "git", "commit", "-m", "auto-push",
