@@ -79,9 +79,10 @@ async def main():
                         type=int,
                         default=60)
     parser.add_argument("--path-file", "-p",
-                        help="a file that contains the path to the repo",
+                        help="a file that contains the path to all repos",
                         type=str,
-                        default=".")
+                        default="path.txt")
+    
     args = parser.parse_args()
     global LOGGING
     LOGGING = args.log
@@ -91,7 +92,12 @@ async def main():
     while True:
         # update the repo
         try:
-            await update_repo()
+            with open(args.path_file, "r") as f:
+                paths = f.readlines()
+            for path in paths:
+                path = path.strip()
+                log(f"Updating {path}...")
+                await update_repo(path)
         except Exception as e:
             log(e)
         log("Waiting...")
