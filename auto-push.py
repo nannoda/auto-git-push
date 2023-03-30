@@ -36,9 +36,6 @@ async def commit(path:str = "."):
     log(f"[stderr] {stderr.decode()}")
     log("Done")
 
-
-
-
 async def main():
     # getting args using argparse
     import argparse
@@ -59,7 +56,9 @@ async def main():
 
 
     log("Starting...")
-    await commit()
+    while True:
+        await commit()
+        await asyncio.sleep(args.interval)
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
